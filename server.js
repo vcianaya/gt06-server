@@ -18,6 +18,11 @@ net.createServer(function (connection) {
 
 gps_event.on("parse_data", (data) => {
     parts.start = data.substr(0, 4);
+    if (parts.start == '7878') {
+        parts.length = parseInt(data.substr(4, 2), 16);
+        parts.finish = data.substr(6 + parts.length * 2, 4);
+        parts.protocal_id = data.substr(6, 2);
+    }
     console.log(parts);
 });
 
