@@ -12,7 +12,7 @@ net.createServer(function (connection) {
         console.log(data.toString('hex'));
         gps_event.emit("someEvent");
     });        
-}).listen(3000);
+}).listen(5000);
 //HTTP SERVER
 const app = express();
 app.get('/', (req, res)=>{
@@ -20,12 +20,11 @@ app.get('/', (req, res)=>{
 });
 
 const server = http.Server(app);
-server.listen(5000);
+server.listen(3000);
 
 const io = socketIo(server);
 
-io.on('connection', (socket)=>{
-    console.log(socket);
+io.on('connection', (socket)=>{    
     socket.emit('hello',{
         nobre: 'Victor Anaya'
     });
