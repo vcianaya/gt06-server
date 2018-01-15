@@ -4,6 +4,8 @@ net = require('net');
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+//VARIBALES
+var parts={};
 //TCP SERVER
 var gps_event = new EventEmitter();
 net.createServer(function (connection) {
@@ -13,6 +15,14 @@ net.createServer(function (connection) {
         gps_event.emit("parse_data", data.toString('hex'));
     });        
 }).listen(5000);
+
+gps_event.on("parse_data", (data) => {
+    parts.start = data.substr(0, 4);
+    console.log(parts);
+});
+
+gps_event.on('error', () => console.log('-----------ERROR ENCONTRADO-----'));
+
 //HTTP SERVER
 const app = express();
 app.get('/', (req, res)=>{
@@ -29,9 +39,3 @@ io.on('connection', (socket)=>{
         nobre: 'Victor Anaya'
     });
 });
-
-gps_event.on("parse_data", (data)=> {
-    console.log(data);
-});
-
-gps_event.on('error', () => console.log('-----------ERROR ENCONTRADO-----'));
