@@ -7,6 +7,7 @@ const socketIo = require('socket.io');
 net.createServer(function (connection) {
     connection.on('data', function (data) {
         console.log("TCP-SERVER-ON-LINE");
+        console.log(data);        
     });
     
 }).listen(5000);
