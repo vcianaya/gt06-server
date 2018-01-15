@@ -10,7 +10,7 @@ net.createServer(function (connection) {
     connection.on('data', function (data) {
         console.log("TCP-SERVER-ON-LINE");
         console.log(data.toString('hex'));
-        gps_event.emit("someEvent");
+        gps_event.emit("parse_data", data.toString('hex'));
     });        
 }).listen(5000);
 //HTTP SERVER
@@ -30,8 +30,8 @@ io.on('connection', (socket)=>{
     });
 });
 
-gps_event.on("someEvent", ()=> {
-    console.log("event has occured");
+gps_event.on("parse_data", (data)=> {
+    console.log(data);
 });
 
 gps_event.on('error', () => console.log('-----------ERROR ENCONTRADO-----'));
