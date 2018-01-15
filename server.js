@@ -33,3 +33,5 @@ io.on('connection', (socket)=>{
 gps_event.on("someEvent", ()=> {
     console.log("event has occured");
 });
+
+gps_event.on('error', () => console.log('-----------ERROR ENCONTRADO-----'));
