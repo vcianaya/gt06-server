@@ -30,6 +30,6 @@ io.on('connection', (socket)=>{
     });
 });
 
-gps_event.on("someEvent", function () {
+gps_event.on("someEvent", ()=> {
     console.log("event has occured");
 });
