@@ -7,6 +7,7 @@ const socketIo = require('socket.io');
 //VARIBALES
 var parts={};
 var gps={};
+var __count = 1;
 //TCP SERVER
 var gps_event = new EventEmitter();
 net.createServer(function (connection) {
@@ -116,4 +117,14 @@ this.getUID = function () {
 
 this.setUID = function (uid) {
     gps.uid = uid;
+};
+
+this.authorize = function () {
+    var length = '05';
+    var protocal_id = '01';
+    var serial = f.str_pad(this.__count, 4, 0);
+    var str = length + protocal_id + serial;
+    this.__count++;
+    var buff = new Buffer('787805010001d9dc0d0a', 'hex');    
+    this.device.send(buff);
 };
