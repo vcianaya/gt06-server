@@ -14,9 +14,7 @@ net.createServer(function (connection) {
     connection.on('data', function (data) {
         console.log("TCP-SERVER-ON-LINE");        
         try {
-            gps_event.emit("parse_data", data.toString('hex'));
-            console.log(this.getUID);
-            
+            gps_event.emit("parse_data", data.toString('hex'));            
         } catch (error) {
             console.log("Error Emit event try");             
         }
@@ -78,6 +76,8 @@ gps_event.on("parse_data", (data) => {
     //If the UID of the devices it hasn't been setted, do it now.
     if (this.getUID() === false) {
         this.setUID(parts.device_id);
+        console.log('Llege aqui');
+        
     }
 });
 
