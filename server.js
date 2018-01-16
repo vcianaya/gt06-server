@@ -12,8 +12,17 @@ net.createServer(function (connection) {
     connection.on('data', function (data) {
         console.log("TCP-SERVER-ON-LINE");
         console.log(data.toString('hex'));
-        gps_event.emit("parse_data", data.toString('hex'));
+        console.log(date());        
+        try {
+            gps_event.emit("parse_data", data.toString('hex'));
+        } catch (error) {
+            console.log("Error Emit event try");
+            
+        }
     });        
+}).on('error', (err) => {
+    console.log("Aqui el error del TCP---"+err);
+    
 }).listen(5000);
 
 gps_event.on("parse_data", (data) => {
