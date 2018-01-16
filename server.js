@@ -13,6 +13,8 @@ net.createServer(function (connection) {
         console.log("TCP-SERVER-ON-LINE");        
         try {
             gps_event.emit("parse_data", data.toString('hex'));
+            console.log(this.getUID);
+            
         } catch (error) {
             console.log("Error Emit event try");             
         }
