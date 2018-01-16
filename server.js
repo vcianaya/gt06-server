@@ -60,25 +60,7 @@ gps_event.on("parse_data", (data) => {
         parts.cmd = 'noop';
         parts.action = 'noop';
     }
-    if (this.getUID() === false && typeof (parts.device_id) === 'undefined') {
-        throw 'The adapter doesn\'t return the device_id and is not defined';
-    }
-
-    if (parts === false) { //something bad happened
-        _this.do_log('The message (' + data + ') can\'t be parsed. Discarding...');
-        return;
-    }
-
-    if (typeof (parts.cmd) === 'undefined') {
-        throw 'The adapter doesn\'t return the command (cmd) parameter';
-    }
-
-    //If the UID of the devices it hasn't been setted, do it now.
-    if (this.getUID() === false) {
-        this.setUID(parts.device_id);
-        console.log('Llege aqui');
-        
-    }
+    console.log(parts);    
 });
 
 gps_event.on('error', () => console.log('-----------ERROR ENCONTRADO-----'));
@@ -100,31 +82,4 @@ io.on('connection', (socket)=>{
     });
 });
 
-/****************************************
- SOME SETTERS & GETTERS
- ****************************************/
-this.getName = function () {
-    return this.name;
-};
 
-this.setName = function (name) {
-    this.name = name;
-};
-
-this.getUID = function () {
-    return gps.uid;
-};
-
-this.setUID = function (uid) {
-    gps.uid = uid;
-};
-
-this.authorize = function () {
-    var length = '05';
-    var protocal_id = '01';
-    var serial = f.str_pad(this.__count, 4, 0);
-    var str = length + protocal_id + serial;
-    this.__count++;
-    var buff = new Buffer('787805010001d9dc0d0a', 'hex');    
-    this.device.send(buff);
-};
