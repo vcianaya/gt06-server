@@ -6,6 +6,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 //VARIBALES
 var parts={};
+var gps={};
 //TCP SERVER
 var gps_event = new EventEmitter();
 net.createServer(function (connection) {
@@ -110,9 +111,9 @@ this.setName = function (name) {
 };
 
 this.getUID = function () {
-    return this.uid;
+    return gps.uid;
 };
 
 this.setUID = function (uid) {
-    this.uid = uid;
+    gps.uid = uid;
 };
