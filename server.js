@@ -11,8 +11,7 @@ var gps_event = new EventEmitter();
 net.createServer(function (connection) {
     connection.on('data', function (data) {
         console.log("TCP-SERVER-ON-LINE");
-        console.log(data.toString('hex'));
-        console.log(date());        
+        console.log(data.toString('hex'));        
         try {
             gps_event.emit("parse_data", data.toString('hex'));
         } catch (error) {
