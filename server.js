@@ -29,11 +29,7 @@ gps_event.on("parse_data", (data) => {
         parts.finish = data.substr(6 + parts.length * 2, 4);
         parts.protocal_id = data.substr(6, 2);
         parts['protocal_id'] = data.substr(6, 2);
-        //PUEDE ESTAR EL ERROR AQUI POR EL CODIGO HEXADECIMAL
-        if (parts.finish != '0d0a') {
-            throw 'finish code incorrect!';
-        }
-
+    
         if (parts.protocal_id == '01') {
             parts.device_id = data.substr(8, 16);
             parts.cmd = 'login_request';
@@ -62,7 +58,23 @@ gps_event.on("parse_data", (data) => {
         parts.cmd = 'noop';
         parts.action = 'noop';
     }
-    console.log(parts);
+    if (this.getUID() === false && typeof (parts.device_id) === 'undefined') {
+        throw 'The adapter doesn\'t return the device_id and is not defined';
+    }
+
+    if (parts === false) { //something bad happened
+        _this.do_log('The message (' + data + ') can\'t be parsed. Discarding...');
+        return;
+    }
+
+    if (typeof (parts.cmd) === 'undefined') {
+        throw 'The adapter doesn\'t return the command (cmd) parameter';
+    }
+
+    //If the UID of the devices it hasn't been setted, do it now.
+    if (this.getUID() === false) {
+        this.setUID(parts.device_id);
+    }
 });
 
 gps_event.on('error', () => console.log('-----------ERROR ENCONTRADO-----'));
@@ -83,3 +95,22 @@ io.on('connection', (socket)=>{
         nobre: 'Victor Anaya'
     });
 });
+
+/****************************************
+ SOME SETTERS & GETTERS
+ ****************************************/
+this.getName = function () {
+    return this.name;
+};
+
+this.setName = function (name) {
+    this.name = name;
+};
+
+this.getUID = function () {
+    return this.uid;
+};
+
+this.setUID = function (uid) {
+    this.uid = uid;
+};
