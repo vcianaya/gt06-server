@@ -1,3 +1,4 @@
+var parts = {}; 
 exports.parse_data = (data)=>{
     data = data.toString('hex');
     parts.start = data.substr(0, 4);
