@@ -4,19 +4,19 @@ net = require('net');
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+gt06 = require('./tools/gt06');
 //VARIBALES
 cont = 0;
 //TCP SERVER
 net.createServer(function (connection) {
     connection.on('data', function (data) {
-        cont = cont + 1;
-        console.log("TCP-SERVER-ON-LINE-->" + cont);
-
+        cont = cont+1;
+        console.log("TCP-SERVER-ON-LINE-->"+cont);
+        console.log(gt06.parse_data(data));
+        
     });
 }).on('error', (err) => {
     console.log("Aqui el error del TCP---" + err);
-}).on('end', () => {
-    console.log('disconnected from server');
 }).listen(5000);
 
 
