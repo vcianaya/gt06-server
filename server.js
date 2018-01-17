@@ -9,12 +9,14 @@ cont = 0;
 //TCP SERVER
 net.createServer(function (connection) {
     connection.on('data', function (data) {
-        cont = cont+1;
-        console.log("TCP-SERVER-ON-LINE-->"+cont);
+        cont = cont + 1;
+        console.log("TCP-SERVER-ON-LINE-->" + cont);
 
     });
 }).on('error', (err) => {
     console.log("Aqui el error del TCP---" + err);
+}).on('end', () => {
+    console.log('disconnected from server');
 }).listen(5000);
 
 
