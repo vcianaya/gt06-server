@@ -9,12 +9,13 @@ gt06 = require('./tools/gt06');
 cont = 0;
 //TCP SERVER
 net.createServer(function (connection) {
+    
     connection.on('data', function (data) {
-        cont = cont+1;
-        console.log("TCP-SERVER-ON-LINE-->"+cont);
         vico = gt06.parse_data(data);
-        console.log(vico.protocal_id);
-        
+        if (vico.protocal_id == '01') {
+            cont = cont+1;
+            console.log(cont);            
+        }        
     });
 }).on('error', (err) => {
     console.log("Aqui el error del TCP---" + err);
