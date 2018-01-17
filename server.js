@@ -12,7 +12,8 @@ net.createServer(function (connection) {
     connection.on('data', function (data) {
         cont = cont+1;
         console.log("TCP-SERVER-ON-LINE-->"+cont);
-        console.log(gt06.parse_data(data));
+        vico = gt06.parse_data(data);
+        console.log(vico.protocal_id);
         
     });
 }).on('error', (err) => {
