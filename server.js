@@ -5,18 +5,17 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 //VARIBALES
-
+cont = 0;
 //TCP SERVER
-var gps_event = new EventEmitter();
 net.createServer(function (connection) {
     connection.on('data', function (data) {
-        console.log("TCP-SERVER-ON-LINE");
+        cont = cont+1;
+        console.log("TCP-SERVER-ON-LINE-->"+cont);
+
     });
 }).on('error', (err) => {
     console.log("Aqui el error del TCP---" + err);
 }).listen(5000);
-
-
 
 
 //HTTP SERVER
